@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "XcodeUtility"
-  spec.version      = "0.0.3"
+  spec.version      = "0.0.4"
   spec.summary      = "XcodeUtility is to extend your Xcode and views functionality."
 
   # This description is used to generate tags and improve search results.
@@ -89,7 +89,7 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "XcodeUtility", "XcodeUtility/**/*.{h,m,swift}"
+  spec.source_files  = "XcodeUtility/*.{h,m,swift}"
   spec.exclude_files = "XcodeUtility/Exclude"
 
   # spec.public_header_files = "Classes/**/*.h"
