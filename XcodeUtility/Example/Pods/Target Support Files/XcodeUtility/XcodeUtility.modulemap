@@ -1,0 +1,6 @@
+framework module XcodeUtility {
+  umbrella header "XcodeUtility-umbrella.h"
+
+  export *
+  module * { export * }
+}
