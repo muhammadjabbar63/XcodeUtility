@@ -14,16 +14,20 @@ extension UIButton {
     
     func pulsate() {
         
-        let pulse = CASpringAnimation(keyPath: "transform.scale")
-        pulse.duration = 0.1
-        pulse.fromValue = 0.85
-        pulse.toValue = 1.0
-        pulse.autoreverses = true
-        pulse.repeatCount = 1
-        pulse.initialVelocity = 0.5
-        pulse.damping = 1.0
-        
-        layer.add(pulse, forKey: "pulse")
+        if #available(iOS 9.0, *) {
+            let pulse = CASpringAnimation(keyPath: "transform.scale")
+            pulse.duration = 0.1
+            pulse.fromValue = 0.85
+            pulse.toValue = 1.0
+            pulse.autoreverses = true
+            pulse.repeatCount = 1
+            pulse.initialVelocity = 0.5
+            pulse.damping = 1.0
+            
+            layer.add(pulse, forKey: "pulse")
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     func flash() {
@@ -57,5 +61,29 @@ extension UIButton {
         shake.toValue = toValue
         
         layer.add(shake, forKey: "position")
+    }
+    func imageFromURL(_ url: String, placeholder: UIImage? = nil, fadeIn: Bool = true, shouldCacheImage: Bool = true, closure: ((_ image: UIImage?) -> ())? = nil, expire: ((_ isExpire: Bool?) -> ())? = nil)
+    {
+        
+        _ = UIImage.image(fromURL: url, placeholder: placeholder, shouldCacheImage: shouldCacheImage, closure: { (image, url) in
+            
+            if image == nil {
+                return
+            }
+            self.setImage(image, for: .normal)
+            //            self.setBackgroundImage(image, for: .normal)
+            
+            if fadeIn {
+                let transition = CATransition()
+                transition.duration = 0.5
+                transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+                transition.type = CATransitionType.fade
+                self.layer.add(transition, forKey: nil)
+            }
+            closure?(image)
+            
+        }) { (isExPires) in
+            expire?(isExPires)
+        }
     }
 }
